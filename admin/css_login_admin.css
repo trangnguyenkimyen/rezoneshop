@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+body {
+    background: #181818;
+    color: #ffffff;
+}
+
+main {
+    padding: 40px 40px;
+}
+
+form {
+    width: 40%;
+    background: transparent;
+    color: inherit;
+    border: 1px solid transparent;
+    border-image: linear-gradient(to right, #08AEEA 0%, #2AF598 100%);
+    border-image-slice: 1%;
+}
+
+.form-control {
+    transition: border-bottom;
+}
+
+.form-control:focus {
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(to right, #08AEEA, #2AF598);
+    border-image-slice: 1%;
+}
+
+.form-control,
+::placeholder,
+a {
+    color: #ffffff;
+}
+
+.button {
+    background: transparent;
+    border: 0.75px solid #ffffff;
+}
+
+.button:hover {
+    background: linear-gradient(to right, #08AEEA, #2AF598);
+    color: #181818;
+}
+
+.shop-name {
+    font-family: "Montserrat", sans-serif;
+    font-size: 30px;
+    text-align: center;
+    padding: 15px 0;
+}
+
+.shop-name a {
+    text-decoration: none;
+}
+
+.shop-name a:hover {
+    transition: color 0.3s;
+    color: #9be0ba;
+}
