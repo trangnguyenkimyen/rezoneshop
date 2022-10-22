@@ -5,12 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css_product.css">
     <link rel="icon" href="logo.svg" type="image/icon type">
     <title>Search | Re-zone</title>    
     
     <style>
         main {
-            padding: 40px 25px;
+            padding: 40px 0;
         }
 
         .search {
@@ -145,32 +146,45 @@
             
         <?php
         if(isset($_GET["submit"])) {
-            require_once "config.php";
-            
+            require_once "config.php";            
+
             if(isset($_GET["search"])) {
                 $search = $_GET["search"];            
                 $sql = "select * from product where product_name like '%$search%'";
+                $count = "select count(*) as 'soluong' from product where product_name like '%$search%'";
                 $result = mysqli_query($conn, $sql);
+                
                 if(mysqli_num_rows($result) == 0) {
-                    $sql = "select * from product where color like '%$search%'";
+                    $sql = "select * from product where color like '%$search%'";  
+                    $count = "select count(*) as 'soluong' from product where color like '%$search%'"; 
                     $result = mysqli_query($conn, $sql);
+
                     if(mysqli_num_rows($result) == 0) {
-                        $sql = "select * from product where sex like '%$search%'";
+                        $sql = "select * from product where sex like '$search'";  
+                        $count = "select count(*) as 'soluong' from product where sex like '$search'";
                         $result = mysqli_query($conn, $sql);
+
                         if(mysqli_num_rows($result) == 0) {
-                            $sql = "select * from product where category_name like '%$search%'";
-                            $result = mysqli_query($conn, $sql);
+                            $sql = "select * from product where category_name like '%$search%'"; 
+                            $count = "select count(*) as 'soluong' from product where category_name like '%$search%'";
+                            $result = mysqli_query($conn, $sql);   
+
                             if(mysqli_num_rows($result) == 0) {
-                                $sql = "select * from product where brand like '%$search%'";
-                                $result = mysqli_query($conn, $sql);
+                                $sql = "select * from product where brand like '%$search%'";     
+                                $count = "select count(*) as 'soluong' from product where brand like '%$search%'";
+                                $result = mysqli_query($conn, $sql);   
+
                                 if(mysqli_num_rows($result) == 0) {
                                     $sql = "select * from product where season like '%$search%'";
-                                    $result = mysqli_query($conn, $sql);
+                                    $count = "select count(*) as 'soluong' from product where season like '%$search%'";
+                                    $result = mysqli_query($conn, $sql);      
                                 }
                             }
                         }
-                    }
-                }
+                    }                    
+                } 
+                $result_count = mysqli_query($conn, $count);  
+                echo "SEARCH: ".$search;                      
             }
 
             if(isset($_GET["brand"])) {
@@ -193,15 +207,35 @@
                 }
                 
                 $sql = "select * from product where brand = '$brand'"; 
+                $count = "select count(*) as 'soluong' from product where brand = '$brand'";
                 $result = mysqli_query($conn, $sql);               
+                $result_count = mysqli_query($conn, $count);
+                
+                echo "BRAND: ".$brand;
             }                         
             
-            if(mysqli_num_rows($result) > 0) {
-                while($row = mysqli_fetch_assoc($result)) {                            
-                    echo var_dump($row);                                                        
+            $row_count = mysqli_fetch_assoc($result_count);
+
+            ?>
+            ( <?php  echo $row_count["soluong"]; ?> results ) <br>
+            <?php
+            
+            if(mysqli_num_rows($result) > 0) {                
+                while($row = mysqli_fetch_assoc($result)) {     
+                    ?>                                                                                                      
+                    <div class="box">
+                        <div class="img"> <a href="product.php?id= <?php echo $row["id"] ?>">
+                            <img src="img/<?php echo $row["img"];?>"/><br/>
+                            </a>
+                        </div>
+                        <div class="p_name">
+                            <b><?php echo $row["product_name"];?></b><br/>
+                        </div>                              
+                    </div>
+                <?php                                                       
                 }
             }
-            else echo "0 results";
+            
             mysqli_close($conn);
         }
         else {    

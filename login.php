@@ -5,9 +5,15 @@
         $email = $_POST["email"];
         $pass = $_POST["pass"];
 
-        $sql = "select * from user_info where email='$email' and password='$pass'";
+        // $sql = "select * from user_info where email='$email' and password='$pass'";
         require_once("config.php");
-        $result = mysqli_query($conn, $sql);
+        // $result = mysqli_query($conn, $sql);
+
+        $sql = "select * from user_info where email=? and password=?";
+        $stmt = mysqli_prepare($conn,$sql);
+        mysqli_stmt_bind_param($stmt,'ss',$email, $pass);
+        mysqli_stmt_execute($stmt); 
+        $result = mysqli_stmt_get_result($stmt);      
 
         if (mysqli_num_rows($result) > 0) {             
             $row = mysqli_fetch_assoc($result);
@@ -21,6 +27,7 @@
             header("location: index.php");
         }
     }    
+    else {
 ?>
 
 <!DOCTYPE html>
@@ -92,6 +99,9 @@
 </body>
 </html>
 
+<?php
+    }
+?>
 
 
 

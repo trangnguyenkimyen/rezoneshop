@@ -1,0 +1,35 @@
+.top_fmale img {
+    width: 100%;
+    height: 750px;
+    object-fit: cover;
+
+}
+
+.box {
+    float: left;
+    text-align: center;
+    padding-bottom: 20px;
+    width: 25%;
+    height: 550px;
+    border: 0.5px solid black;
+    /* margin:1px; */
+}
+
+.img {
+    height: 450px;
+    width: 100%;
+}
+
+.img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.p_name {
+    width: 100%;
+
+    padding-top: 20px;
+    font-size: 14px;
+    font-family: Monospace;
+}

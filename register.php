@@ -6,10 +6,18 @@
         $phone_numb = $_POST["phone_numb"];
         $address = $_POST["address"];
 
-        // Câu sql kiểm tra email
+        Câu sql kiểm tra email
         $sql = "select * from user_info where email='$email'";
         require_once("config.php");
         $result = mysqli_query($conn, $sql);
+        
+        // =================== CÁCH 2 ==================
+        // $sql = "select * from user_info where email=?";
+        // require_once "config.php";
+        // $stmt = mysqli_prepare($conn, $sql);
+        // mysqli_stmt_bind_param($stmt, 's', $email);
+        // mysqli_stmt_execute($stmt);
+        // $result = mysqli_stmt_get_result($stmt);
 
         // Nếu email không bị trùng thì thêm user mới
         if (mysqli_num_rows($result) == 0) {
@@ -27,13 +35,14 @@
                 $_SESSION["Email"] = $row["email"];
                 $_SESSION["Pass"] = $row["password"];                                            
                 $_SESSION["User_name"] = $row["user_name"];                                            
-            }          
+            } 
+            if(isset($_SESSION["Email"])) {   
+                mysqli_close($conn);     
+                header("location: index.php");
+            }           
         }  
-    }  
-    if(isset($_SESSION["Email"])) {   
-        mysqli_close($conn);     
-        header("location: index.php");
-    }                  
+    }         
+    else {              
 ?>
 
 <!DOCTYPE html>
@@ -118,4 +127,8 @@
     </main>
 </body>
 </html>
+
+<?php
+    }
+    ?>
 
