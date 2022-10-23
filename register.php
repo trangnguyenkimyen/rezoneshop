@@ -1,16 +1,20 @@
-<?php
+<?php                    
+    $error = false;
+
     if(isset($_POST["submit"])) {
         $user_name = $_POST["user_name"];
         $email = $_POST["email"];
         $pass = $_POST["pass"];
         $phone_numb = $_POST["phone_numb"];
-        $address = $_POST["address"];
+        $address = $_POST["address"];        
 
-        Câu sql kiểm tra email
-        $sql = "select * from user_info where email='$email'";
+        // Insert thông tin người dùng nhập vào bảng user_info
+        $sql = "insert into user_info (user_name, email, password, phone_numb, address)
+        values ('$user_name', '$email', '$pass', '$phone_numb', '$address')
+        ";
         require_once("config.php");
         $result = mysqli_query($conn, $sql);
-        
+
         // =================== CÁCH 2 ==================
         // $sql = "select * from user_info where email=?";
         // require_once "config.php";
@@ -19,14 +23,8 @@
         // mysqli_stmt_execute($stmt);
         // $result = mysqli_stmt_get_result($stmt);
 
-        // Nếu email không bị trùng thì thêm user mới
-        if (mysqli_num_rows($result) == 0) {
-            $sql = "insert into user_info (user_name, email, password, phone_numb, address)
-            values ('$user_name', '$email', '$pass', '$phone_numb', '$address')
-            ";
-            require_once("config.php");
-            $result = mysqli_query($conn, $sql);
-
+        // Nếu không phát sinh lỗi thì tạo session
+        if ($result > 0) {
             $sql = "select * from user_info where email='$email' and password='$pass'";
             $result = mysqli_query($conn, $sql);
             if (mysqli_num_rows($result) > 0) {             
@@ -34,15 +32,18 @@
                 session_start();
                 $_SESSION["Email"] = $row["email"];
                 $_SESSION["Pass"] = $row["password"];                                            
-                $_SESSION["User_name"] = $row["user_name"];                                            
-            } 
-            if(isset($_SESSION["Email"])) {   
-                mysqli_close($conn);     
-                header("location: index.php");
-            }           
-        }  
-    }         
-    else {              
+                $_SESSION["User_name"] = $row["user_name"];
+                mysqli_close($conn);
+                header("location: index.php");                                                                                                    
+            }             
+        } 
+        else {
+            $error = true;
+            $reason = "<p class='error'>Error: ".mysqli_error($conn)."</p>";                                              
+        } 
+        mysqli_close($conn); 
+    }    
+    if(!(isset($_POST["submit"])) || (isset($_POST["submit"]))) {     
 ?>
 
 <!DOCTYPE html>
@@ -84,12 +85,8 @@
     <!-- Conntent -->
     <main>       
         <?php
-            if(isset($_POST["submit"])) {
-               if (mysqli_num_rows($result) > 0) {
-                    echo "<p class='error'>This email address is already associated with an account.</p>";                                 
-                }   
-            }                    
-        ?>        
+            if ($error == true) echo $reason;
+        ?>
 
         <form action="register.php" method="post">
             <h2>Create an Account</h2>
@@ -130,5 +127,4 @@
 
 <?php
     }
-    ?>
-
+?>

@@ -1,16 +1,5 @@
-<?php    
+<?php
     session_start();
-    if(isset($_SESSION["Email"])) {
-        $email = $_SESSION["Email"];
-        $sql = "select * from user_info where email='$email'";
-        require_once("config.php");
-        $result = mysqli_query($conn, $sql);
-
-        if(mysqli_num_rows($result) == 0) {
-            mysqli_close($conn);      
-            header("location: login.php");
-        }
-    }
 ?>
 
 <!DOCTYPE html>

@@ -1,33 +1,41 @@
 <?php  
     if (session_start())
         session_destroy();
+    
+    $error = false;
+
     if(isset($_POST["login"])) {
         $email = $_POST["email"];
         $pass = $_POST["pass"];
-
-        // $sql = "select * from user_info where email='$email' and password='$pass'";
+    
+        $sql = "select * from user_info where email='$email' and password='$pass'";
         require_once("config.php");
-        // $result = mysqli_query($conn, $sql);
+        $result = mysqli_query($conn, $sql);
 
-        $sql = "select * from user_info where email=? and password=?";
-        $stmt = mysqli_prepare($conn,$sql);
-        mysqli_stmt_bind_param($stmt,'ss',$email, $pass);
-        mysqli_stmt_execute($stmt); 
-        $result = mysqli_stmt_get_result($stmt);      
+        // ========================= CÁCH 2 =================================
+        // $sql = "select * from user_info where email=? and password=?";
+        // $stmt = mysqli_prepare($conn,$sql);
+        // mysqli_stmt_bind_param($stmt,'ss',$email, $pass);
+        // mysqli_stmt_execute($stmt); 
+        // $result = mysqli_stmt_get_result($stmt);      
 
         if (mysqli_num_rows($result) > 0) {             
             $row = mysqli_fetch_assoc($result);
             session_start();
+
             $_SESSION["Email"] = $row["email"];
             $_SESSION["Pass"] = $row["password"];                                            
-            $_SESSION["User_name"] = $row["user_name"];                                            
-        }
-        if(isset($_SESSION["Email"])) {  
+            $_SESSION["User_name"] = $row["user_name"]; 
+
             mysqli_close($conn);      
-            header("location: index.php");
+            header("location: index.php");                                           
         }
-    }    
-    else {
+        else {
+            $error = true;
+            $reason = "<p class='error'>Invalid email/password.</p>";
+        }
+    }
+    if(!(isset($_POST["login"])) || (isset($_POST["login"]))) {        
 ?>
 
 <!DOCTYPE html>
@@ -58,21 +66,15 @@
 <body>
     <!-- Navigation bar -->
     <header>
-        <?php 
-            require_once("navbar.php"); 
-        ?>
+        <?php require_once("navbar.php"); ?>                
     </header>           
     
     <!-- Conntent -->
     <main>       
         <?php
-            if(isset($_POST["login"])) {
-                if (mysqli_num_rows($result) == 0) {
-                    echo "<p class='error'>Invalid email/password.</p>"; 
-                    mysqli_close($conn);                                
-                }   
-            }                    
+            if ($error == true) echo $reason;
         ?>
+
         <form action="login.php" method="post">            
             <h2>Login</h2>
 
@@ -102,7 +104,6 @@
 <?php
     }
 ?>
-
 
 
 

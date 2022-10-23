@@ -42,12 +42,29 @@
             font-size: 30px; 
         }
 
-        .nav a:hover {
+        .shop-name a:hover{
+            text-decoration: none;
             color: #C2C2C0;
         }
 
+        .btn a:hover{
+            text-decoration: none;
+            color: #C2C2C0;
+
+        }
+    
         .left button {
             margin-right: 20px;
+        }
+        
+        .right button {
+            margin-left: 20px;
+        }
+
+        .left, .right {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
         }
         
     </style> 
@@ -57,8 +74,8 @@
     <nav>
         <div class="left">
             <button class="shop-name"><a href="../index.php">Re-zone</a></button>           
-            <button class="nav products"><a href="ds_sanpham.php?">Sản phẩm</a></button>  
-            <button class="nav customers"><a href="ds_khachhang.php">Khách hàng</a></button>  
+            <button class="btn products"><a href="ds_sanpham.php">Sản phẩm</a></button>  
+            <button class="btn customers"><a href="ds_khachhang.php">Khách hàng</a></button>  
         </div>    
 
         <div class="right">
@@ -68,7 +85,7 @@
                 <?php
             } ?>  
 
-            <button class="nav logout"><a href="logout.php">Logout</a></button>    
+            <button class="btn logout"><a href="logout.php">Logout</a></button>    
         </div>           
     </nav>    
 </body>

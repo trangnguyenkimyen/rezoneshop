@@ -1,0 +1,76 @@
+.form-group {
+    margin: 0 0 30px 0;
+}
+
+.form-group input {
+    width: 100%;
+    font-size: inherit;
+
+    border: none;
+    background: transparent;
+    border-bottom: 0.75px solid #bdbdbd;
+}
+
+select {
+    width: 100%;
+    font-size: inherit;
+
+    border: none;
+    background: transparent;
+    outline: none;
+    border-bottom: 0.75px solid #bdbdbd;
+}
+
+.file input {
+    border-bottom: none;
+}
+
+.radio input {
+    width: 5%;
+    margin-left: 40px;
+}
+
+input:focus {
+    outline: none;
+}
+
+body {
+    font-size: 15px;
+    font-family: Arial;
+    color: #545540;
+}
+
+form {
+    width: 60%;
+
+    margin: auto;
+    padding: 40px;
+    background: #F7F2ED;
+    border-radius: 20px;
+}
+
+.button {
+    margin: 10px 10px 10px 0;
+    padding: 10px 70px;
+    background: #545540;
+    color: white;
+    border: none;
+    border-radius: 20px;
+
+    font-size: inherit;
+
+    cursor: pointer;
+}
+
+form h2 {
+    font-size: 30px;
+    margin-top: 0;
+    text-align: center;
+}
+
+.exit {
+    text-decoration: none;
+    color: inherit;
+    background: transparent;
+    border: 1px solid #545540;
+}
