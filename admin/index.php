@@ -1,4 +1,6 @@
 <?php
+    $error = false;
+
     if(isset($_POST["login"])) {
         $email = $_POST["email"];
         $pass = $_POST["pass"];
@@ -10,15 +12,21 @@
         if (mysqli_num_rows($result) > 0) {             
             $row = mysqli_fetch_assoc($result);
             session_start();
-            $_SESSION["Email"] = $row["email"];
+            $_SESSION["Email_Admin"] = $row["email"];
             $_SESSION["Pass"] = $row["password"];                                            
-            $_SESSION["Name"] = $row["name"];                                            
+            $_SESSION["Name"] = $row["name"]; 
+            
+            mysqli_close($conn);                          
+            header("location: ds_sanpham.php");   
+            exit();         
         }
+        else {
+            $error = true;
+            $reason = "<p class='error'>Invalid email/password.</p>";
+        }
+        mysqli_close($conn);
     }
-    if(isset($_SESSION["Email"])) {  
-        mysqli_close($conn);      
-        header("location: ds_sanpham.php");
-    }
+    
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +37,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css"> 
     <link rel="stylesheet" href="../css_login.css">  
-    <link rel="stylesheet" href="css_login_admin.css">  
+    <link rel="stylesheet" href="css_login_admin.css"> 
+    <link rel="icon" href="../logo.svg" type="image/icon type">  
     <title>Admin Login | Re-zone</title>
     
     <style>
@@ -39,6 +48,13 @@
 
         .btn-wrapper {
             margin-bottom: 0;
+        }
+
+        .error {
+            color: red;
+            margin: 0;
+            padding: 0;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -51,6 +67,10 @@
 
     <!-- Conntent -->
     <main>       
+        <?php
+            if ($error == true) echo $reason;
+        ?>
+
         <form action="index.php" method="post">
             <h2>Admin Login</h2>
 
@@ -69,16 +89,9 @@
                 <a href="forgotpw.php" class="forgotpw">Forgot password?</a>                     
             </div>                        
         </form> 
-        <br>
-        <?php
-            if(isset($_POST["login"])) {
-               if (mysqli_num_rows($result) == 0) {
-                    echo "<p>Invalid email/password.</p>"; 
-                    mysqli_close($conn);                                
-                }   
-            }                    
-        ?>
+        <br>        
     </main>
 </body>
 </html>
+
 

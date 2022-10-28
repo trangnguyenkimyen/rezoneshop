@@ -26,9 +26,11 @@
             $_SESSION["Email"] = $row["email"];
             $_SESSION["Pass"] = $row["password"];                                            
             $_SESSION["User_name"] = $row["user_name"]; 
+            $_SESSION["Id"] = $row["id"]; 
 
-            mysqli_close($conn);      
-            header("location: index.php");                                           
+            mysqli_close($conn);                 
+            header("location: index.php");
+            exit();                                            
         }
         else {
             $error = true;
@@ -98,6 +100,10 @@
         <br>
        
     </main>
+
+    <footer>
+        <?php require_once("footer.php");?>
+    </footer>
 </body>
 </html>
 

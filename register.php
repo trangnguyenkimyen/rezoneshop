@@ -30,11 +30,13 @@
             if (mysqli_num_rows($result) > 0) {             
                 $row = mysqli_fetch_assoc($result);
                 session_start();
+                $_SESSION["Id"] = $row["id"];
                 $_SESSION["Email"] = $row["email"];
                 $_SESSION["Pass"] = $row["password"];                                            
                 $_SESSION["User_name"] = $row["user_name"];
-                mysqli_close($conn);
-                header("location: index.php");                                                                                                    
+                mysqli_close($conn);                
+                header("location: index.php"); 
+                exit();                                                                                                   
             }             
         } 
         else {
@@ -122,6 +124,10 @@
         <br>
         
     </main>
+
+    <footer>
+        <?php require_once("footer.php");?>
+    </footer>
 </body>
 </html>
 

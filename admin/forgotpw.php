@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css"> 
     <link rel="stylesheet" href="../css_login.css">  
-    <link rel="stylesheet" href="css_login_admin.css">  
+    <link rel="stylesheet" href="css_login_admin.css"> 
+    <link rel="icon" href="../logo.svg" type="image/icon type">  
     <title>Admin Forgotten Password | Re-zone</title>
     
     <style>

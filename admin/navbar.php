@@ -1,6 +1,9 @@
 <?php 
     session_start(); 
-    if(!(isset($_SESSION["Email"]))) header("location:index.php");
+    if(!(isset($_SESSION["Email_Admin"]))) {        
+        header("location:index.php");
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +76,7 @@
 <body>
     <nav>
         <div class="left">
-            <button class="shop-name"><a href="../index.php">Re-zone</a></button>           
+            <button class="shop-name"><a href="return_to_homepage.php">Re-zone</a></button>           
             <button class="btn products"><a href="ds_sanpham.php">Sản phẩm</a></button>  
             <button class="btn customers"><a href="ds_khachhang.php">Khách hàng</a></button>  
         </div>    

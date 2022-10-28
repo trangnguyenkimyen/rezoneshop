@@ -1,3 +1,11 @@
+<?php 
+    session_start(); 
+    if(!(isset($_SESSION["Email_Admin"]))) {        
+        header("location:index.php");
+        exit();
+    }
+?>
+
 <?php
     if(isset($_POST["sua"])) {
         //xử lý cập nhật dữ liệu vào database
@@ -26,8 +34,10 @@
         $category_name = $_POST["category_name"];
         $brand = $_POST["brand"];
         $season = $_POST["season"];
+        $size = $_POST["size"];
+
         require_once "../config.php";
-        $sql = "update product set id = '$id', product_name ='$p_name', price ='$price', date_added = '$date_added', img ='$img', color ='$color', sex='$sex', category_name ='$category_name', brand = '$brand', season ='$season' where id = '$id'";
+        $sql = "update product set product_name ='$p_name', price ='$price', date_added = '$date_added', img ='$img', color ='$color', sex='$sex', category_name ='$category_name', brand = '$brand', season ='$season', size ='$size' where id = '$id'";
         if (mysqli_query($conn, $sql) > 0) {
             echo "Cập nhật dữ liệu thành công"."<br/>";
             echo "<a href='ds_sanpham.php'>Về trang chính</a>";
@@ -41,17 +51,17 @@
 ?>
 
 <!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css_form_them.css">
-
-    <title>Cập nhật sản phẩm</title>
-</head>
-
 <html>
-    <head></head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css_form_them.css">
+        <link rel="icon" href="../logo.svg" type="image/icon type"> 
+
+        <title>Cập nhật sản phẩm</title>
+    </head>
+    
     <body>
         <?php 
          if(isset($_GET["id"])){

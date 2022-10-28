@@ -1,27 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- link css chung: style.css -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="logo.svg" type="image/icon type">
-    <title>Order | Re-zone</title>    
-    
-    <!-- css riêng tại đây hoặc tạo file css -->
-</head>
+<?php
+    if (isset($_GET["user_id"])) {
+        require_once "config.php";
 
-<body>
-    <!-- Navigation bar -->
-    <header>
-        <?php require_once("navbar.php"); ?>
-    </header>           
-    
-    <!-- Conntent -->
-    <main>
-        <!-- Làm trong phần main này nha -->
-        order     
-    </main>
-</body>
-</html>
+        $user_id = $_GET["user_id"];
+        $sql = "select * from cart where user_id = '$user_id'";
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $cart_id = $row["id"];
+                $sql_insert = "insert into order_items (cart_id, user_id) values ('$cart_id', '$user_id')";
+                $result_insert = mysqli_query($conn, $sql_insert);                 
+            }
+            mysqli_close($conn);            
+            header("location: bag.php");
+            exit();
+        } 
+        else echo "Error: ". mysqli_error($conn);
+        mysqli_close($conn);                      
+    }
+?>

@@ -13,7 +13,7 @@
         }        
 
         $sql = "DELETE FROM product WHERE id='$id'";
-        if ($conn->query($sql) === TRUE) {
+        if ($conn->query($sql) === TRUE) {            
             echo "Xoá thành công! <br>";
             echo "<a href='ds_sanpham.php'>Về trang chính</a>";
         } else {

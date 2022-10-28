@@ -38,7 +38,7 @@
     </header>           
     
     <!-- Conntent -->
-    <main>
+    <main>        
         <form action="forgotpw.php" method="post">
             <h2>Forgotten Password</h2>
 
@@ -75,7 +75,9 @@
 
     </main>
 
-
+    <footer>
+        <?php require_once("footer.php");?>
+    </footer>
 </body>
 </html>
 

@@ -5,13 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="css_product.css">
+    <link rel="stylesheet" href="style_fmale.css">
     <link rel="icon" href="logo.svg" type="image/icon type">
     <title>Search | Re-zone</title>    
     
     <style>
         main {
-            padding: 40px 0;
+            padding-top: 40px;
+            flex: 1;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
         }
 
         .search {
@@ -121,6 +127,13 @@
             opacity: 1;
         }
 
+        .count {
+            color: #bdbdbd;
+        }
+
+        .brands {
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -146,34 +159,43 @@
             
         <?php
         if(isset($_GET["submit"])) {
-            require_once "config.php";            
 
+            require_once "config.php"; 
+
+            // Câu lệnh tìm kiếm
             if(isset($_GET["search"])) {
+                
+                // Tìm kiếm theo Tên SP
                 $search = $_GET["search"];            
                 $sql = "select * from product where product_name like '%$search%'";
                 $count = "select count(*) as 'soluong' from product where product_name like '%$search%'";
                 $result = mysqli_query($conn, $sql);
-                
+
+                // Tìm kiếm theo Màu sắc
                 if(mysqli_num_rows($result) == 0) {
                     $sql = "select * from product where color like '%$search%'";  
                     $count = "select count(*) as 'soluong' from product where color like '%$search%'"; 
                     $result = mysqli_query($conn, $sql);
 
+                    // Tìm kiếm theo Giới tính
                     if(mysqli_num_rows($result) == 0) {
                         $sql = "select * from product where sex like '$search'";  
                         $count = "select count(*) as 'soluong' from product where sex like '$search'";
                         $result = mysqli_query($conn, $sql);
 
+                        // Tìm kiếm theo Phân loại
                         if(mysqli_num_rows($result) == 0) {
                             $sql = "select * from product where category_name like '%$search%'"; 
                             $count = "select count(*) as 'soluong' from product where category_name like '%$search%'";
                             $result = mysqli_query($conn, $sql);   
 
+                            // Tìm kiếm theo Thương hiệu
                             if(mysqli_num_rows($result) == 0) {
                                 $sql = "select * from product where brand like '%$search%'";     
                                 $count = "select count(*) as 'soluong' from product where brand like '%$search%'";
                                 $result = mysqli_query($conn, $sql);   
 
+                                // Tìm kiếm theo Mùa
                                 if(mysqli_num_rows($result) == 0) {
                                     $sql = "select * from product where season like '%$search%'";
                                     $count = "select count(*) as 'soluong' from product where season like '%$search%'";
@@ -182,11 +204,12 @@
                             }
                         }
                     }                    
-                } 
-                $result_count = mysqli_query($conn, $count);  
-                echo "SEARCH: ".$search;                      
+                }             
+                $result_count = mysqli_query($conn, $count);  // Đếm số lượng kết quả
+                echo "<center>SEARCH: ".$search; // In nội dung nhập trong ô tìm kiếm                   
             }
 
+            // Tìm kiếm theo thương hiệu
             if(isset($_GET["brand"])) {
                 $brand = $_GET["brand"];
                 
@@ -211,15 +234,17 @@
                 $result = mysqli_query($conn, $sql);               
                 $result_count = mysqli_query($conn, $count);
                 
-                echo "BRAND: ".$brand;
+                echo "<center>BRAND: ".$brand;
             }                         
             
             $row_count = mysqli_fetch_assoc($result_count);
 
             ?>
-            ( <?php  echo $row_count["soluong"]; ?> results ) <br>
+                <!-- ============= IN SỐ LƯỢNG KẾT QUẢ ============= -->
+                <span class="count">( <?php  echo $row_count["soluong"]; ?> results )</span></center> <br>
             <?php
             
+            // IN KẾT QUẢ TÌM KIẾM NẾU SỐ LƯỢNG KQ > 0
             if(mysqli_num_rows($result) > 0) {                
                 while($row = mysqli_fetch_assoc($result)) {     
                     ?>                                                                                                      
@@ -241,7 +266,8 @@
         else {    
         ?>
 
-        <p class="letter-spacing">POPULAR BRANDS</p>
+        <!-- ============= POPULAR BRANDS ============= -->
+        <p class="letter-spacing brands">POPULAR BRANDS</p>
         <div class="search-popular">
             <div class="suggestion">
                 <a href="search.php?submit=&brand=balenciaga">
@@ -254,7 +280,7 @@
 
             <div class="suggestion">
                 <a href="search.php?submit=&brand=lv">
-                    <img src="img/search-LV.jpg">
+                    <img src="img/search-LV.JPG">
                     <div class="img-second">
                         <p class="letter-spacing">LOUIS VUITTON</p>
                     </div>                                                
@@ -272,7 +298,7 @@
 
             <div class="suggestion">
                 <a href="search.php?submit=&brand=dior">
-                    <img src="img/search-Dior.jpg">
+                    <img src="img/search-Dior.JPG">
                     <div class="img-second">
                         <p class="letter-spacing">DIOR</p>
                     </div>                                                
@@ -292,7 +318,11 @@
         <?php
             }
         ?>        
-    </main>    
+    </main> 
+    
+    <footer>
+        <?php require_once("footer.php");?>
+    </footer>
 </body>
 </html>
 

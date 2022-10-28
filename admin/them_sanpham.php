@@ -1,3 +1,11 @@
+<?php 
+    session_start(); 
+    if(!(isset($_SESSION["Email_Admin"]))) {        
+        header("location:index.php");
+        exit();
+    }
+?>
+
 <?php
     if(isset($_POST["submit"]))
     {
@@ -21,7 +29,7 @@
     
         require_once "../config.php";
         $sql = "INSERT INTO product (product_name, price, date_added, img, color, sex, category_name, brand, season, size)
-        values('$product_name', '$price', '$date_added', '$img', '$color', '$sex', '$category_name', '$brand', '$season', '$size')";
+        VALUES ('$product_name', '$price', '$date_added', '$img', '$color', '$sex', '$category_name', '$brand', '$season', '$size')";
 
         if (mysqli_query($conn, $sql) > 0) {
             echo "Thêm dữ liệu thành công"."<br>";
@@ -43,6 +51,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css_form_them.css">
+    <link rel="icon" href="../logo.svg" type="image/icon type"> 
     
     <title>Thêm sản phẩm</title>
 
