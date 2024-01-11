@@ -2,7 +2,7 @@
   <img src="https://github.com/trangnguyenkimyen/rezoneshop/assets/85601408/9d5e31f6-213a-4cb6-93ad-c2131a3f13f3" width="40"/> Re-zone 
 </h1>
 <p>
-  Re-zone is a simple shopping website that sells clothes.  It uses CSS, PHP, and MySQL to create a user-friendly interface. You can visit <a href="http://rezone.ddns.net">rezone.ddns.net</a> to see it in action.
+  Re-zone is a simple shopping website that sells clothes.  It uses CSS, PHP, and MySQL to create a user-friendly interface.
 </p>
 <br>
 <hr></hr>
